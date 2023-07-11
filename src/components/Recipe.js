@@ -35,6 +35,10 @@ function Recipe() {
                     <button onClick={() => navigate(`/recipe/update/${id}`)}>Edit</button>
                     <button onClick={deleteRecipe}>Delete</button>
                 </div>
+                <h2>Ingredients Needed</h2>
+                <p>{recipe.ingredients}</p>
+                <h2>Steps</h2>
+                <p>{recipe.steps[0]}</p>
             </div>
         )
 

@@ -33,11 +33,11 @@ const data = await response.json()
 }
 
 return (
-<form onSubmit={handleSubmit}>
-<input onChange={handleChange} value={recipeInput.name} name='name' placeholder='name' />
-<input onChange={handleChange} value={recipeInput.image} name='image' placeholder='image' />
-<input type='submit' />
-</form>
+    <form onSubmit={handleSubmit}>
+        <input onChange={handleChange} value={recipeInput.name} name='name' placeholder='name' />
+        <input onChange={handleChange} value={recipeInput.image} name='image' placeholder='image' />
+        <input type='submit' />
+    </form>
 )
 }
 
