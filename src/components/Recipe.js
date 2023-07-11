@@ -27,12 +27,14 @@ function Recipe() {
         navigate('/')
     }
 
+
+
     const display = recipe && (
             <div>
                 <h1>{recipe.name}</h1>
                 <img src={recipe.image} alt={recipe.name} height={300} />
                 <div>
-                    <button onClick={() => navigate(`/recipe/update/${id}`)}>Edit</button>
+                    <button onClick={() => navigate(`/recipes/update/${id}`)}>Edit</button>
                     <button onClick={deleteRecipe}>Delete</button>
                 </div>
                 <h2>Ingredients Needed</h2>
