@@ -4,7 +4,13 @@ import { useParams, useNavigate } from "react-router-dom";
 function UpdateRecipe() {
   const navigate = useNavigate();
 
-  const [recipeInput, setRecipeInput] = useState(null);
+  const [recipeInput, setRecipeInput] = useState({
+    ingredients: [],
+    steps: [],
+  });
+
+  const [ingredientInput, setIngredientInput] = useState("");
+  const [stepInput, setStepInput] = useState("");
 
   const { id } = useParams();
   const URL = `${process.env.REACT_APP_BACKEND_URI}/recipes/${id}`;
@@ -27,20 +33,43 @@ function UpdateRecipe() {
     });
   };
 
-  const handleStepChange = (e, index) => {
-    const updatedSteps = [...recipeInput.steps];
-    updatedSteps[index] = e.target.value;
+  const handleIngredientChange = (e) => {
+    setIngredientInput(e.target.value);
+  };
 
-    // Renumber the steps
-    const renumberedSteps = updatedSteps.map((step, idx) => {
-      const stepNumber = idx + 1;
-      return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
-    });
+  const handleStepChange = (e) => {
+    setStepInput(e.target.value);
+  };
 
-    setRecipeInput({
-      ...recipeInput,
-      steps: renumberedSteps,
-    });
+  const handleAddIngredient = () => {
+    if (ingredientInput) {
+      setRecipeInput({
+        ...recipeInput,
+        ingredients: [...recipeInput.ingredients, ingredientInput],
+      });
+      setIngredientInput("");
+    }
+  };
+
+  const handleAddStep = () => {
+    if (stepInput) {
+      setRecipeInput((prevRecipeInput) => {
+        const updatedSteps = [...prevRecipeInput.steps, stepInput];
+  
+        // Renumber the steps
+        const renumberedSteps = updatedSteps.map((step, idx) => {
+          const stepNumber = idx + 1;
+          return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
+        });
+  
+        return {
+          ...prevRecipeInput,
+          steps: renumberedSteps,
+        };
+      });
+  
+      setStepInput("");
+    }
   };
 
   const handleDeleteIngredient = (index) => {
@@ -55,13 +84,13 @@ function UpdateRecipe() {
   const handleDeleteStep = (index) => {
     const updatedSteps = [...recipeInput.steps];
     updatedSteps.splice(index, 1);
-
+  
     // Renumber the steps
     const renumberedSteps = updatedSteps.map((step, idx) => {
       const stepNumber = idx + 1;
       return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
     });
-
+  
     setRecipeInput({
       ...recipeInput,
       steps: renumberedSteps,
@@ -75,33 +104,43 @@ function UpdateRecipe() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(recipeInput),
     });
-    if (response.status !== 204) console.log("error!"); // add error handling later
+    if (response.status !== 204) console.log("error!");
     navigate(`/recipes/${id}`);
   };
 
   const display = recipeInput && (
     <form onSubmit={handleSubmit}>
       <input required onChange={handleChange} value={recipeInput.name} name="name" placeholder="Name" />
-      <input required onChange={handleChange} value={recipeInput.ingredients} name="ingredients" placeholder="Ingredients" />
 
-      {/* Displaying existing ingredients with delete buttons */}
-      {recipeInput.ingredients.map((ingredient, index) => (
-        <div key={index}>
-          <p>{ingredient}</p>
-          <button type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </button>
-        </div>
-      ))}
+      <div>
+        {/* Displaying existing ingredients */}
+        {recipeInput.ingredients.map((ingredient, index) => (
+          <div key={index}>
+            <p>{ingredient}</p>
+            <button type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </button>
+          </div>
+        ))}
+      </div>
 
-      {/* Displaying existing steps with delete buttons */}
-      {recipeInput.steps.map((step, index) => (
-        <div key={index}>
-          <p>{step}</p>
-          <button type="button" onClick={() => handleDeleteStep(index)}> Delete Step </button>
-          <input required onChange={(e) => handleStepChange(e, index)} value={step} name="steps" placeholder="Steps" />
-        </div>
-      ))}
+      <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" />
+      <button type="button" onClick={handleAddIngredient}> Add Ingredient </button>
 
-      <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />
+      <div>
+        {/* Displaying existing steps */}
+        {recipeInput.steps.map((step, index) => (
+          <div key={index}>
+            <p>{step}</p>
+            <button type="button" onClick={() => handleDeleteStep(index)}> Delete Step </button>
+          </div>
+        ))}
+      </div>
+
+      <input onChange={handleStepChange} value={stepInput} placeholder="Enter a step"/>
+      <button type="button" onClick={handleAddStep}> Add Step </button>
+
+<div>
+    <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />
+</div>
       <input type="submit" />
     </form>
   );
