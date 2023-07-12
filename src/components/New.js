@@ -65,7 +65,6 @@ function New() {
     }
   };
   
-
   const handleDeleteIngredient = (index) => {
     const updatedIngredients = [...recipeInput.ingredients];
     updatedIngredients.splice(index, 1);
@@ -90,8 +89,6 @@ function New() {
       steps: renumberedSteps,
     });
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
