@@ -41,6 +41,8 @@ function UpdateRecipe() {
     const display = recipeInput && (
         <form onSubmit={handleSubmit}>
             <input required onChange={handleChange} value={recipeInput.name} name='name' placeholder='name' />
+            <input required onChange={handleChange} value={recipeInput.ingredients} name='ingredients' placeholder='ingredients' />
+            <input required onChange={handleChange} value={recipeInput.steps} name='steps' placeholder='steps' />
             <input onChange={handleChange} value={recipeInput.image} name='image' placeholder='image' />
             <input type='submit' />
         </form>
