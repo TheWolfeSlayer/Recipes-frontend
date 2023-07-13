@@ -28,7 +28,7 @@ function Recipe() {
     }
 
     const display = recipe && (
-        <div>
+        <div >
             <h1>{recipe.name}</h1>
             <img src={recipe.image} alt={recipe.name} height={300} />
             <div>
@@ -36,9 +36,11 @@ function Recipe() {
                 <button onClick={deleteRecipe}>Delete</button>
             </div>
             <h2>Ingredients Needed</h2>
-            {recipe.ingredients.map((ingredient, index) => (
-                <p key={index}>{ingredient}</p>
-            ))}
+            <ul>
+                {recipe.ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                ))}
+            </ul>
             <h2>Steps</h2>
             {recipe.steps.map((step, index) => (
                 <p key={index}>{step}</p>
