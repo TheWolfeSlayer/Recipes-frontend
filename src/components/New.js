@@ -6,7 +6,8 @@ const navigate = useNavigate()
 
 const [recipeInput, setRecipeInput] = useState({
     name: '',
-    image: ''
+    image: '',
+    ingredients: []
 })
 
 const handleChange = (e) => {
@@ -17,6 +18,17 @@ const handleChange = (e) => {
         });
 }
 
+const ingredient = document.getElementById('ingredient')
+
+let ingredients = []
+
+function addIngredient() {
+    if (ingredient.value!== '') {
+        ingredients.push(ingredient.value)
+        ingredient.value = ''
+    } else {}
+    console.log(ingredients)
+}
 
 const handleSubmit = async (e) => {
     e.preventDefault()
@@ -33,12 +45,17 @@ const data = await response.json()
 }
 
 return (
-<form onSubmit={handleSubmit}>
-<input onChange={handleChange} value={recipeInput.name} name='name' placeholder='name' />
-<input onChange={handleChange} value={recipeInput.image} name='image' placeholder='image' />
-<input type='submit' />
-</form>
-)
+    <form onSubmit={handleSubmit}>
+        <input onChange={handleChange} value={recipeInput.name} name='name' placeholder='name' />
+        <input onChange={handleChange} value={recipeInput.image} name='image' placeholder='image' />
+        <input onChange={handleChange} id='ingredient' value={recipeInput.ingredients} name='ingredients' placeholder='ingredients' />
+        <input type='button' onClick={addIngredient} value='Add Ingredient' />
+        
+
+        {/* <button onClick={addIngredient}>Add Ingredient</button> */}
+        <input type='submit' />
+    </form>
+    )
 }
 
 export default New

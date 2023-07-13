@@ -42,6 +42,7 @@ function UpdateRecipe() {
         <form onSubmit={handleSubmit}>
             <input required onChange={handleChange} value={recipeInput.name} name='name' placeholder='name' />
             <input onChange={handleChange} value={recipeInput.image} name='image' placeholder='image' />
+            <input onChange={handleChange} value={recipeInput.ingredients} name='ingredients' placeholder='ingredients' />
             <input type='submit' />
         </form>
     )
