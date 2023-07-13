@@ -11,6 +11,7 @@ function UpdateRecipe() {
 
   const [ingredientInput, setIngredientInput] = useState("");
   const [stepInput, setStepInput] = useState("");
+  const [stepCount, setStepCount] = useState(1); // Initialize step count to 1
 
   const { id } = useParams();
   const URL = `${process.env.REACT_APP_BACKEND_URI}/recipes/${id}`;
@@ -54,12 +55,12 @@ function UpdateRecipe() {
   const handleAddStep = () => {
     if (stepInput) {
       setRecipeInput((prevRecipeInput) => {
-        const updatedSteps = [...prevRecipeInput.steps, stepInput];
+        const updatedSteps = [...prevRecipeInput.steps, `${stepCount}. ${stepInput}`];
   
         // Renumber the steps
         const renumberedSteps = updatedSteps.map((step, idx) => {
           const stepNumber = idx + 1;
-          return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
+          return `${stepNumber}. ${step.substring(step.indexOf(' ') + 1)}`;
         });
   
         return {
@@ -68,7 +69,8 @@ function UpdateRecipe() {
         };
       });
   
-      setStepInput("");
+      setStepInput(""); // Clear the step input field
+      setStepCount((prevStepCount) => prevStepCount + 1); // Increment the step count
     }
   };
 
