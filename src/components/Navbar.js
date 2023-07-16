@@ -5,12 +5,11 @@ import Navbar from 'react-bootstrap/Navbar';
 function NavigationBar() {
     return (
       <>
-        <Navbar bg="dark" data-bs-theme="dark">
+        <Navbar className="navColor">
           <Container>
-            <Navbar.Brand href="/">EZ Recipes</Navbar.Brand>
+            <Navbar.Brand href="/" className="fw-bolder">EZ Recipes</Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/new">New</Nav.Link>
+              <Nav.Link href="/new" className="fw-bold">Add Recipe</Nav.Link>
             </Nav>
           </Container>
         </Navbar>
