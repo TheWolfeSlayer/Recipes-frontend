@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 function Recipe() {
     const navigate = useNavigate()
@@ -32,8 +33,8 @@ function Recipe() {
             <h1>{recipe.name}</h1>
             <img src={recipe.image} alt={recipe.name} height={300} />
             <div>
-                <button onClick={() => navigate(`/recipes/update/${id}`)}>Edit</button>
-                <button onClick={deleteRecipe}>Delete</button>
+                <Button variant="success" onClick={() => navigate(`/recipes/update/${id}`)}>Edit</Button>
+                <Button variant="danger" onClick={deleteRecipe}>Delete</Button>
             </div>
             <h2>Ingredients Needed</h2>
             <ul>
