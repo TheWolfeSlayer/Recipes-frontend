@@ -12,13 +12,16 @@ function App() {
      
       <Router> 
         <NavigationBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/recipes/:id" element={<Recipe />} />
-          <Route path="/recipes/update/:id" element={<UpdateRecipe />} />
-          <Route path="/new" element={<New />} />
-        </Routes>
+        <div>
+          <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/recipes/:id" element={<Recipe />} />
+              <Route path="/recipes/update/:id" element={<UpdateRecipe />} />
+              <Route path="/new" element={<New />} />
+          </Routes>
+        </div>
       </Router>
+        
     </div>
   )
 }
