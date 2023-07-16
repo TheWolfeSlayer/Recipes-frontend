@@ -128,12 +128,14 @@ function UpdateRecipe() {
 
       <div>
         {/* Displaying existing steps */}
+        <ol>
         {recipeInput.steps.map((step, index) => (
           <div key={index}>
-            {step}
+            <li>{step}</li>
             <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
           </div>
         ))}
+        </ol>
       </div>
 
       <input onChange={handleStepChange} value={stepInput} placeholder="Enter a step"/>
