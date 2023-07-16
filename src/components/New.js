@@ -47,17 +47,11 @@ function New() {
   const handleAddStep = () => {
     if (stepInput) {
       setRecipeInput((prevRecipeInput) => {
-        const updatedSteps = [...prevRecipeInput.steps, `${stepCount}. ${stepInput}`];
-        
-        // Renumber the steps
-        const renumberedSteps = updatedSteps.map((step, idx) => {
-          const stepNumber = idx + 1;
-          return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
-        });
+        const updatedSteps = [...prevRecipeInput.steps, `${stepInput}`];
         
         return {
           ...prevRecipeInput,
-          steps: renumberedSteps, // Add numbered step to the array + Add new step to the array
+          steps: updatedSteps, // Add numbered step to the array + Add new step to the array
         };
       });
       
@@ -78,16 +72,10 @@ function New() {
   const handleDeleteStep = (index) => {
     const updatedSteps = [...recipeInput.steps];
     updatedSteps.splice(index, 1);
-    
-    // Renumber the steps
-    const renumberedSteps = updatedSteps.map((step, idx) => {
-      const stepNumber = idx + 1;
-      return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
-    });
-    
+
     setRecipeInput({
       ...recipeInput,
-      steps: renumberedSteps,
+      steps: updatedSteps,
     });
   };
 
@@ -125,12 +113,12 @@ function New() {
     <div>
         {/* Displaying existing steps */}
         <ol>
-        {recipeInput.steps.map((step, index) => (
-          <div key={index}>
-            <li>{step}</li>
-            <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
-          </div>
-        ))}
+          {recipeInput.steps.map((step, index) => (
+            <div key={index}>
+              <li>{step}</li>
+              <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
+            </div>
+          ))}
         </ol>
     </div>
       <input onChange={handleStepChange} value={stepInput} name="Enter a step" placeholder="Enter step" />

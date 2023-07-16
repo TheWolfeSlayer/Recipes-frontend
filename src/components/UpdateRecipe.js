@@ -57,15 +57,9 @@ function UpdateRecipe() {
       setRecipeInput((prevRecipeInput) => {
         const updatedSteps = [...prevRecipeInput.steps, stepInput];
   
-        // Renumber the steps
-        const renumberedSteps = updatedSteps.map((step, idx) => {
-          const stepNumber = idx + 1;
-          return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
-        });
-  
         return {
           ...prevRecipeInput,
-          steps: renumberedSteps,
+          steps: updatedSteps,
         };
       });
   
@@ -87,14 +81,10 @@ function UpdateRecipe() {
     updatedSteps.splice(index, 1);
   
     // Renumber the steps
-    const renumberedSteps = updatedSteps.map((step, idx) => {
-      const stepNumber = idx + 1;
-      return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
-    });
   
     setRecipeInput({
       ...recipeInput,
-      steps: renumberedSteps,
+      steps: updatedSteps,
     });
   };
 
@@ -129,12 +119,12 @@ function UpdateRecipe() {
       <div>
         {/* Displaying existing steps */}
         <ol>
-        {recipeInput.steps.map((step, index) => (
-          <div key={index}>
-            <li>{step}</li>
-            <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
-          </div>
-        ))}
+          {recipeInput.steps.map((step, index) => (
+            <div key={index}>
+              <li>{step}</li>
+              <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
+            </div>
+          ))}
         </ol>
       </div>
 
