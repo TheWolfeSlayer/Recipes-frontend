@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 function New() {
   const navigate = useNavigate();
@@ -113,25 +114,25 @@ function New() {
         {recipeInput.ingredients.map((ingredient, index) => (
           <div key={index}>
             <p>{ingredient}</p>
-            <button type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </button>
+            <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
           </div>
         ))}
       </div>
 
       <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" />
-      <button type="button" onClick={handleAddIngredient}> Add Ingredient </button>
+      <Button variant="success" type="button" onClick={handleAddIngredient}> Add Ingredient </Button>
 
     <div>
         {/* Displaying existing steps */}
         {recipeInput.steps.map((step, index) => (
           <div key={index}>
             <p>{step}</p>
-            <button type="button" onClick={() => handleDeleteStep(index)}> Delete Step </button>
+            <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
           </div>
         ))}
     </div>
       <input onChange={handleStepChange} value={stepInput} name="Enter a step" placeholder="Enter step" />
-      <button type="button" onClick={handleAddStep}> Add Step </button>
+      <Button variant="success" type="button" onClick={handleAddStep}> Add Step </Button>
 
     <div>
       <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />

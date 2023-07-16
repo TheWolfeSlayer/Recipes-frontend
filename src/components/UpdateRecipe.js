@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 function UpdateRecipe() {
   const navigate = useNavigate();
@@ -116,8 +117,8 @@ function UpdateRecipe() {
         {/* Displaying existing ingredients */}
         {recipeInput.ingredients.map((ingredient, index) => (
           <div key={index}>
-            <p>{ingredient}</p>
-            <button type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </button>
+            {ingredient} | 
+            <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
           </div>
         ))}
       </div>
@@ -129,8 +130,8 @@ function UpdateRecipe() {
         {/* Displaying existing steps */}
         {recipeInput.steps.map((step, index) => (
           <div key={index}>
-            <p>{step}</p>
-            <button type="button" onClick={() => handleDeleteStep(index)}> Delete Step </button>
+            {step}
+            <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
           </div>
         ))}
       </div>
@@ -141,7 +142,7 @@ function UpdateRecipe() {
 <div>
     <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />
 </div>
-      <input type="submit" />
+      <Button variant="success" as="input" type="submit" value="Submit" />
     </form>
   );
 
