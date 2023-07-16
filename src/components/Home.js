@@ -37,7 +37,7 @@ function Home() {
 
   return (
     <div className="container">
-      <h1>Recipe Database</h1>
+      <h1>Recipe HomePage</h1>
       <div className="row">{display}</div>
     </div>
   );
