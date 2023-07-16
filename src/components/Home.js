@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -17,21 +19,17 @@ function Home() {
 
   const display = recipes.map((recipe) => {
     return (
-      <div key={recipe._id} className="col-lg-4 col-md-6 mb-4">
-        <div className="card" style={{ width: "100%" }}>
-          <img
-            src={recipe.image}
-            className="card-img-top"
-            alt={recipe.name}
-          />
-          <div className="card-body">
-            <h5 className="card-title">{recipe.name}</h5>
+      <Card style={{ width: '18rem', margin: '10px', height: '100%' }}>
+        <Card.Img variant="top" src={recipe.image} style={{ height: '200px', objectFit: 'cover', paddingTop: '10px' }} />
+        <Card.Body style={{ height: '120px' }}>
+          <Card.Title>{recipe.name}</Card.Title>
+          <Button variant="primary" class="btn btn-primary btn-sm">
             <Link to={`/recipes/${recipe._id}`} className="btn btn-primary">
               View Recipe
             </Link>
-          </div>
-        </div>
-      </div>
+          </Button>
+        </Card.Body>
+      </Card>
     );
   });
 
