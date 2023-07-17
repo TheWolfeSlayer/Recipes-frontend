@@ -22,9 +22,9 @@ function Home() {
   const display = (
     <Row xs={1} md={2} lg={3} className="g-4">
       {recipes.map((recipe) => (
-        <Col key={recipe._id} className="d-flex">
+        <Col key={recipe._id} className="col">
           <Card>
-            <Card.Img variant="top" src={recipe.image}/>
+            <Card.Img variant="top" src={recipe.image} style={{ height: '18rem', objectFit: 'cover' }}  />
             <Card.Body>
               <Card.Title>{recipe.name}</Card.Title>
               <Button variant="primary" className="btn btn-primary btn-sm">
