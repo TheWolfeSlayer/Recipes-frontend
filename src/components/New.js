@@ -95,7 +95,7 @@ function New() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input onChange={handleChange} value={recipeInput.name} name="name" placeholder="Name" />
+      <input onChange={handleChange} value={recipeInput.name} name="name" placeholder="Name" required="true"/>
 
       <div>
         {/* Displaying existing ingredients */}
@@ -107,7 +107,7 @@ function New() {
         ))}
       </div>
 
-      <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" />
+      <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" required="true"/>
       <Button variant="success" type="button" onClick={handleAddIngredient}> Add Ingredient </Button>
 
     <div>
@@ -121,7 +121,7 @@ function New() {
           ))}
         </ol>
     </div>
-      <input onChange={handleStepChange} value={stepInput} name="Enter a step" placeholder="Enter step" />
+      <input onChange={handleStepChange} value={stepInput} name="Enter a step" placeholder="Enter step" required="true"/>
       <Button variant="success" type="button" onClick={handleAddStep}> Add Step </Button>
 
     <div>
