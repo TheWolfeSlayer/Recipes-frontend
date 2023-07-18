@@ -47,7 +47,7 @@ function New() {
     if (stepInput) {
       setRecipeInput((prevRecipeInput) => {
         const updatedSteps = [...prevRecipeInput.steps, `${stepInput}`];
-        
+        console.log(recipeInput.steps)
         return {
           ...prevRecipeInput,
           steps: updatedSteps, // Add numbered step to the array + Add new step to the array
@@ -75,29 +75,26 @@ function New() {
     });
   };
 
-  const stepCheck = async (e) => {
-    if (recipeInput.step.length===0) {
-      return(
-        console.log('enter atleast 1 step')
-      )
-    } else {
-      return (handleAddStep)
-      
-    }
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const URL = `${process.env.REACT_APP_BACKEND_URI}/recipes`;
-    console.log("recipe input", recipeInput);
-    const response = await fetch(URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(recipeInput),
-    });
-    const data = await response.json();
-    console.log("response", data);
-    navigate("/");
+    if (recipeInput.steps.length === 0 || recipeInput.ingredients.length === 0) {
+      return(
+        console.log('enter atleast 1 step and ingredient')
+      )
+    } 
+    else {
+      const URL = `${process.env.REACT_APP_BACKEND_URI}/recipes`;
+      console.log("recipe input", recipeInput);
+      const response = await fetch(URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(recipeInput),
+      });
+      const data = await response.json();
+      console.log("response", data);
+      navigate("/");
+    }
+    
   };
 
   return (
@@ -134,8 +131,8 @@ function New() {
     <div>
       <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />
     </div>
-    
-      <input type="submit" />
+      
+      <input type="submit"/>
     </form>
   );
 }
