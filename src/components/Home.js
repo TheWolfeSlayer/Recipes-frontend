@@ -38,7 +38,7 @@ function Home() {
       ))}
     </Row>
   );
-s
+
   return (
     <div className="container">
       <h1>Recipe HomePage</h1>
