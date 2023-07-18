@@ -17,21 +17,25 @@ function Home() {
     fetchData();
   }, []);
 
-  const display = recipes.map((recipe) => {
-    return (
-      <Card style={{ width: '18rem', margin: '10px', height: '100%' }} key={recipe._id}>
-        <Card.Img variant="top" src={recipe.image} style={{ height: '200px', objectFit: 'cover', paddingTop: '10px' }} />
-        <Card.Body style={{ height: '120px' }}>
-          <Card.Title>{recipe.name}</Card.Title>
-          <Button variant="primary" className="btn btn-primary btn-sm">
-            <Link to={`/recipes/${recipe._id}`} className="btn btn-primary">
-              View Recipe
-            </Link>
-          </Button>
-        </Card.Body>
-      </Card>
-    );
-  });
+  const display = (
+    <Row xs={1} md={2} lg={3} className="g-4">
+      {recipes.map((recipe) => (
+        <Col key={recipe._id} className="col">
+          <Card>
+            <Card.Img variant="top" src={recipe.image} style={{ height: '18rem', objectFit: 'cover' }}  />
+            <Card.Body>
+              <Card.Title>{recipe.name}</Card.Title>
+              <Button variant="primary" className="btn btn-primary btn-sm">
+                <Link to={`/recipes/${recipe._id}`} className="btn btn-primary">
+                  View Recipe
+                </Link>
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  );
 
   return (
     <div className="container">
