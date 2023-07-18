@@ -14,7 +14,6 @@ function New() {
 
   const [ingredientInput, setIngredientInput] = useState(""); // New state for individual ingredient input
   const [stepInput, setStepInput] = useState(""); // New state for individual step input
-  const [stepCount, setStepCount] = useState(1); // New state for keeping track of step count
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -54,9 +53,6 @@ function New() {
           steps: updatedSteps, // Add numbered step to the array + Add new step to the array
         };
       });
-      
-      setStepInput(""); // Clear the step input field
-      setStepCount((prevStepCount) => prevStepCount + 1); // Increment the step count
     }
   };
   
@@ -79,6 +75,17 @@ function New() {
     });
   };
 
+  const stepCheck = async (e) => {
+    if (recipeInput.step.length===0) {
+      return(
+        console.log('enter atleast 1 step')
+      )
+    } else {
+      return (handleAddStep)
+      
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const URL = `${process.env.REACT_APP_BACKEND_URI}/recipes`;
@@ -95,7 +102,7 @@ function New() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input onChange={handleChange} value={recipeInput.name} name="name" placeholder="Name" required="true"/>
+      <input onChange={handleChange} value={recipeInput.name} name="name" placeholder="Name" required/>
 
       <div>
         {/* Displaying existing ingredients */}
@@ -107,7 +114,7 @@ function New() {
         ))}
       </div>
 
-      <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" required="true"/>
+      <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" />
       <Button variant="success" type="button" onClick={handleAddIngredient}> Add Ingredient </Button>
 
     <div>
@@ -121,7 +128,7 @@ function New() {
           ))}
         </ol>
     </div>
-      <input onChange={handleStepChange} value={stepInput} name="Enter a step" placeholder="Enter step" required="true"/>
+      <input onChange={handleStepChange} value={stepInput} name="Enter a step" placeholder="Enter step"/>
       <Button variant="success" type="button" onClick={handleAddStep}> Add Step </Button>
 
     <div>
