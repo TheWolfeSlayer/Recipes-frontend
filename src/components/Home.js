@@ -19,11 +19,11 @@ function Home() {
 
   const display = recipes.map((recipe) => {
     return (
-      <Card style={{ width: '18rem', margin: '10px', height: '100%' }}>
+      <Card style={{ width: '18rem', margin: '10px', height: '100%' }} key={recipe._id}>
         <Card.Img variant="top" src={recipe.image} style={{ height: '200px', objectFit: 'cover', paddingTop: '10px' }} />
         <Card.Body style={{ height: '120px' }}>
           <Card.Title>{recipe.name}</Card.Title>
-          <Button variant="primary" class="btn btn-primary btn-sm">
+          <Button variant="primary" className="btn btn-primary btn-sm">
             <Link to={`/recipes/${recipe._id}`} className="btn btn-primary">
               View Recipe
             </Link>
@@ -36,7 +36,9 @@ function Home() {
   return (
     <div className="container">
       <h1>Recipe HomePage</h1>
-      <div className="row">{display}</div>
+      <div className="row">
+        {display}
+      </div>
     </div>
   );
 }

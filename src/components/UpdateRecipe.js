@@ -90,13 +90,20 @@ function UpdateRecipe() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(URL, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(recipeInput),
-    });
-    if (response.status !== 204) console.log("error!");
-    navigate(`/recipes/${id}`);
+    if (recipeInput.steps.length === 0 || recipeInput.ingredients.length === 0) {
+      return(
+        console.log('enter atleast 1 step and ingredient')
+      )
+    } 
+    else {
+      const response = await fetch(URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(recipeInput),
+      });
+      if (response.status !== 204) console.log("error!");
+      navigate(`/recipes/${id}`);
+    }
   };
 
   const display = recipeInput && (
