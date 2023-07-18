@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 function UpdateRecipe() {
   const navigate = useNavigate();
@@ -107,21 +108,29 @@ function UpdateRecipe() {
   };
 
   const display = recipeInput && (
-    <form onSubmit={handleSubmit}>
-      <input required onChange={handleChange} value={recipeInput.name} name="name" placeholder="Name" />
+    <Form onSubmit={handleSubmit} className="input">
+      <Form.Group className="mb-3" >
+        <Form.Label>Enter recipe name</Form.Label>
+        <Form.Control placeholder="recipe name" />
+      </Form.Group>
 
       <div>
+        <ul>
         {/* Displaying existing ingredients */}
         {recipeInput.ingredients.map((ingredient, index) => (
           <div key={index}>
-            {ingredient} | 
+            <li>{ingredient}</li>
             <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
           </div>
         ))}
+        </ul>
       </div>
 
-      <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" />
-      <button type="button" onClick={handleAddIngredient}> Add Ingredient </button>
+      <Form.Group className="mb-3" >
+        <Form.Label>Enter ingredients</Form.Label>
+        <Form.Control placeholder="Enter ingredient" onChange={handleIngredientChange}/>
+      </Form.Group>
+      <Button variant="success" onClick={handleAddIngredient}> Add Ingredient </Button>
 
       <div>
         {/* Displaying existing steps */}
@@ -135,14 +144,21 @@ function UpdateRecipe() {
         </ol>
       </div>
 
-      <input onChange={handleStepChange} value={stepInput} placeholder="Enter a step"/>
-      <button type="button" onClick={handleAddStep}> Add Step </button>
+      <Form.Group className="mb-3" >
+        <Form.Label>Enter recipe steps</Form.Label>
+        <Form.Control placeholder="Enter step" onChange={handleStepChange}/>
+        </Form.Group>
+      <Button variant="success" onClick={handleAddStep}> Add Step </Button>
 
-<div>
-    <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />
-</div>
-      <Button variant="success" as="input" type="submit" value="Submit" />
-    </form>
+      <Form.Group className="mb-3" >
+        <Form.Label>Enter recipe image</Form.Label>
+        <Form.Control placeholder="Enter image link" onChange={handleChange} value={recipeInput.image}/>
+      </Form.Group>
+        
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
   );
 
   return <div>{display}</div>;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 function New() {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ function New() {
           steps: updatedSteps, // Add numbered step to the array + Add new step to the array
         };
       });
+      setStepInput("")
     }
   };
   
@@ -98,21 +100,31 @@ function New() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input onChange={handleChange} value={recipeInput.name} name="name" placeholder="Name" required/>
+    <Form onSubmit={handleSubmit} className="input">
+      <h1>Create a Recipe</h1>
+      <Form.Group className="mb-3" >
+        <Form.Label>Enter recipe name</Form.Label>
+        <Form.Control placeholder="recipe name" />
+      </Form.Group>
 
       <div>
+        <ul>
         {/* Displaying existing ingredients */}
         {recipeInput.ingredients.map((ingredient, index) => (
           <div key={index}>
-            <p>{ingredient}</p>
-            <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
+            <li>{ingredient}</li>
+            <Button variant="danger" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
           </div>
         ))}
+        </ul>
       </div>
 
-      <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" />
-      <Button variant="success" type="button" onClick={handleAddIngredient}> Add Ingredient </Button>
+      {/* <input onChange={handleIngredientChange} value={ingredientInput} placeholder="Enter an ingredient" /> */}
+      <Form.Group className="mb-3" >
+        <Form.Label>Enter ingredients</Form.Label>
+        <Form.Control placeholder="Enter ingredient" onChange={handleIngredientChange}/>
+      </Form.Group>
+      <Button variant="success" onClick={handleAddIngredient}> Add Ingredient </Button>
 
     <div>
         {/* Displaying existing steps */}
@@ -120,20 +132,30 @@ function New() {
           {recipeInput.steps.map((step, index) => (
             <div key={index}>
               <li>{step}</li>
-              <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
+              <Button variant="danger" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
             </div>
           ))}
         </ol>
     </div>
-      <input onChange={handleStepChange} value={stepInput} name="Enter a step" placeholder="Enter step"/>
-      <Button variant="success" type="button" onClick={handleAddStep}> Add Step </Button>
 
-    <div>
+    <Form.Group className="mb-3" >
+      <Form.Label>Enter recipe steps</Form.Label>
+      <Form.Control placeholder="Enter step" onChange={handleStepChange}/>
+    </Form.Group>
+    <Button variant="success" onClick={handleAddStep}> Add Step </Button>
+
+    {/* <div>
       <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />
-    </div>
+    </div> */}
+    <Form.Group className="mb-3" >
+      <Form.Label>Enter recipe image</Form.Label>
+      <Form.Control placeholder="Enter image link" onChange={handleChange} value={recipeInput.image}/>
+    </Form.Group>
       
-      <input type="submit"/>
-    </form>
+    <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
   );
 }
 
