@@ -116,14 +116,15 @@ function UpdateRecipe() {
       </Form.Group>
 
       <div>
-        <ul>
+        <h2>Ingredients</h2>
         {/* Displaying existing ingredients */}
-        {recipeInput.ingredients.map((ingredient, index) => (
-          <div key={index}>
-            <li>{ingredient}</li>
-            <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
-          </div>
-        ))}
+        <ul>
+          {recipeInput.ingredients.map((ingredient, index) => (
+            <div key={index}>
+              <li>{ingredient}</li>
+              <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
+            </div>
+          ))}
         </ul>
       </div>
 
@@ -134,6 +135,7 @@ function UpdateRecipe() {
       <Button variant="success" onClick={handleAddIngredient}> Add Ingredient </Button>
 
       <div>
+        <h2>Steps</h2>
         {/* Displaying existing steps */}
         <ol>
           {recipeInput.steps.map((step, index) => (

@@ -15,6 +15,7 @@ function New() {
 
   const [ingredientInput, setIngredientInput] = useState(""); // New state for individual ingredient input
   const [stepInput, setStepInput] = useState(""); // New state for individual step input
+  const [editedStepIndex, setEditedStepIndex] = useState(-1); // Index of the step being edited (-1 means no step is being edited)
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -51,10 +52,10 @@ function New() {
         console.log(recipeInput.steps)
         return {
           ...prevRecipeInput,
-          steps: updatedSteps, // Add numbered step to the array + Add new step to the array
+          steps: updatedSteps, // Add new step to the array
         };
       });
-      setStepInput("")
+      setStepInput(""); // Clear the step input field
     }
   };
   
@@ -70,11 +71,28 @@ function New() {
   const handleDeleteStep = (index) => {
     const updatedSteps = [...recipeInput.steps];
     updatedSteps.splice(index, 1);
-
     setRecipeInput({
       ...recipeInput,
       steps: updatedSteps,
     });
+  };
+
+  //Functions to Edit individual steps
+  const handleEditStep = (index) => {
+    setEditedStepIndex(index);
+  };
+
+  const handleSaveEditedStep = () => {
+    if (editedStepIndex !== -1) {
+      const updatedSteps = [...recipeInput.steps];
+      updatedSteps[editedStepIndex] = stepInput;
+      setRecipeInput({
+        ...recipeInput,
+        steps: updatedSteps,
+      });
+      setEditedStepIndex(-1);
+      setStepInput(""); // Clear the step input field
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -96,7 +114,6 @@ function New() {
       console.log("response", data);
       navigate("/");
     }
-    
   };
 
   return (
@@ -108,14 +125,15 @@ function New() {
       </Form.Group>
 
       <div>
-        <ul>
+        <h2>Ingredients</h2>
         {/* Displaying existing ingredients */}
-        {recipeInput.ingredients.map((ingredient, index) => (
-          <div key={index}>
-            <li>{ingredient}</li>
-            <Button variant="danger" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
-          </div>
-        ))}
+        <ul>
+          {recipeInput.ingredients.map((ingredient, index) => (
+            <div key={index}>
+              <li>{ingredient}</li>
+              <Button variant="danger" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
+            </div>
+          ))}
         </ul>
       </div>
 
@@ -126,23 +144,36 @@ function New() {
       </Form.Group>
       <Button variant="success" onClick={handleAddIngredient}> Add Ingredient </Button>
 
-    <div>
+      <div>
+        <h2>Steps</h2>
         {/* Displaying existing steps */}
         <ol>
           {recipeInput.steps.map((step, index) => (
             <div key={index}>
-              <li>{step}</li>
-              <Button variant="danger" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
+              {editedStepIndex === index ? (
+                <div>
+                  <Form.Control placeholder="Edit step" onChange={handleStepChange} value={stepInput} />
+                  <Button variant="primary" onClick={handleSaveEditedStep}> Save </Button>
+                </div>
+              ) : (
+                <div>
+                  <li>{step}</li>
+                  <Button variant="danger" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
+                  <Button variant="primary" onClick={() => handleEditStep(index)}> Edit Step </Button>
+                </div>
+              )}
             </div>
           ))}
         </ol>
-    </div>
+      </div>
 
-    <Form.Group className="mb-3" >
-      <Form.Label>Enter recipe steps</Form.Label>
-      <Form.Control placeholder="Enter step" onChange={handleStepChange}/>
-    </Form.Group>
-    <Button variant="success" onClick={handleAddStep}> Add Step </Button>
+      <Form.Group className="mb-3">
+        <Form.Label>Enter recipe steps</Form.Label>
+        <Form.Control placeholder="Enter step" onChange={handleStepChange} value={stepInput} />
+      </Form.Group>
+      <Button variant="success" onClick={handleAddStep}>
+        Add Step
+      </Button>
 
     {/* <div>
       <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />
@@ -152,9 +183,7 @@ function New() {
       <Form.Control placeholder="Enter image link" onChange={handleChange} value={recipeInput.image}/>
     </Form.Group>
       
-    <Button variant="primary" type="submit">
-        Submit
-      </Button>
+    <Button variant="primary" type="submit"> Submit </Button>
     </Form>
   );
 }
