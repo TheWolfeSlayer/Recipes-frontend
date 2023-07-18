@@ -1,17 +1,3 @@
-// import { Link } from "react-router-dom";
-
-// function Navbar() {
-//     return (
-//         <div>
-//             <Link to='/'>Home</Link>
-//             |
-//             <Link to='/new'>New</Link>
-//         </div>
-//     )
-// }
-
-// export default Navbar
-
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -19,17 +5,15 @@ import Navbar from 'react-bootstrap/Navbar';
 function NavigationBar() {
     return (
       <>
-        <Navbar bg="dark" data-bs-theme="dark">
+        <Navbar className="navColor">
           <Container>
-            <Navbar.Brand href="/">EZ Recipes</Navbar.Brand>
+            <Navbar.Brand href="/" className="fw-bolder">EZ Recipes</Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/new">New</Nav.Link>
+              <Nav.Link href="/new" className="fw-bold">Add Recipe</Nav.Link>
             </Nav>
           </Container>
         </Navbar>
       </>
     );
   }
-  
-  export default NavigationBar;
+export default NavigationBar;

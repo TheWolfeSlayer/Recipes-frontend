@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 function UpdateRecipe() {
   const navigate = useNavigate();
@@ -56,15 +57,9 @@ function UpdateRecipe() {
       setRecipeInput((prevRecipeInput) => {
         const updatedSteps = [...prevRecipeInput.steps, stepInput];
   
-        // Renumber the steps
-        const renumberedSteps = updatedSteps.map((step, idx) => {
-          const stepNumber = idx + 1;
-          return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
-        });
-  
         return {
           ...prevRecipeInput,
-          steps: renumberedSteps,
+          steps: updatedSteps,
         };
       });
   
@@ -86,26 +81,29 @@ function UpdateRecipe() {
     updatedSteps.splice(index, 1);
   
     // Renumber the steps
-    const renumberedSteps = updatedSteps.map((step, idx) => {
-      const stepNumber = idx + 1;
-      return `${stepNumber}. ${step.substring(step.indexOf(". ") + 2)}`;
-    });
   
     setRecipeInput({
       ...recipeInput,
-      steps: renumberedSteps,
+      steps: updatedSteps,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(URL, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(recipeInput),
-    });
-    if (response.status !== 204) console.log("error!");
-    navigate(`/recipes/${id}`);
+    if (recipeInput.steps.length === 0 || recipeInput.ingredients.length === 0) {
+      return(
+        console.log('enter atleast 1 step and ingredient')
+      )
+    } 
+    else {
+      const response = await fetch(URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(recipeInput),
+      });
+      if (response.status !== 204) console.log("error!");
+      navigate(`/recipes/${id}`);
+    }
   };
 
   const display = recipeInput && (
@@ -116,8 +114,8 @@ function UpdateRecipe() {
         {/* Displaying existing ingredients */}
         {recipeInput.ingredients.map((ingredient, index) => (
           <div key={index}>
-            <p>{ingredient}</p>
-            <button type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </button>
+            {ingredient} | 
+            <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
           </div>
         ))}
       </div>
@@ -127,12 +125,14 @@ function UpdateRecipe() {
 
       <div>
         {/* Displaying existing steps */}
-        {recipeInput.steps.map((step, index) => (
-          <div key={index}>
-            <p>{step}</p>
-            <button type="button" onClick={() => handleDeleteStep(index)}> Delete Step </button>
-          </div>
-        ))}
+        <ol>
+          {recipeInput.steps.map((step, index) => (
+            <div key={index}>
+              <li>{step}</li>
+              <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
+            </div>
+          ))}
+        </ol>
       </div>
 
       <input onChange={handleStepChange} value={stepInput} placeholder="Enter a step"/>
@@ -141,7 +141,7 @@ function UpdateRecipe() {
 <div>
     <input onChange={handleChange} value={recipeInput.image} name="image" placeholder="Image" />
 </div>
-      <input type="submit" />
+      <Button variant="success" as="input" type="submit" value="Submit" />
     </form>
   );
 

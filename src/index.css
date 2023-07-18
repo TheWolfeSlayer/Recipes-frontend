@@ -5,12 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
 
 .item img {
 
@@ -20,3 +22,20 @@ code {
   object-fit: cover; 
 
  }
+
+.navColor {
+  background-color: #7edf1e;
+}
+
+.ingredients {
+  word-wrap: normal;
+}
+
+.steps {
+  word-wrap: normal;
+}
+
+.Recipe-Page {
+  margin-left: 50px;
+  margin-top: 25px;
+}

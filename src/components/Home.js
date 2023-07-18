@@ -38,11 +38,13 @@ function Home() {
       ))}
     </Row>
   );
-
+s
   return (
     <div className="container">
-      <h1>Recipe Database</h1>
-      <div className="row">{display}</div>
+      <h1>Recipe HomePage</h1>
+      <div className="row">
+        {display}
+      </div>
     </div>
   );
 }
