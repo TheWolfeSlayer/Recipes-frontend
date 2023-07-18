@@ -13,6 +13,8 @@ function UpdateRecipe() {
 
   const [ingredientInput, setIngredientInput] = useState("");
   const [stepInput, setStepInput] = useState("");
+  const [editedStepIndex, setEditedStepIndex] = useState(-1); // Index of the step being edited (-1 means no step is being edited)
+
 
   const { id } = useParams();
   const URL = `${process.env.REACT_APP_BACKEND_URI}/recipes/${id}`;
@@ -80,13 +82,28 @@ function UpdateRecipe() {
   const handleDeleteStep = (index) => {
     const updatedSteps = [...recipeInput.steps];
     updatedSteps.splice(index, 1);
-  
-    // Renumber the steps
-  
     setRecipeInput({
       ...recipeInput,
       steps: updatedSteps,
     });
+  };
+
+  //Functions to Edit individual steps
+  const handleEditStep = (index) => {
+    setEditedStepIndex(index);
+  };
+
+  const handleSaveEditedStep = () => {
+    if (editedStepIndex !== -1) {
+      const updatedSteps = [...recipeInput.steps];
+      updatedSteps[editedStepIndex] = stepInput;
+      setRecipeInput({
+        ...recipeInput,
+        steps: updatedSteps,
+      });
+      setEditedStepIndex(-1);
+      setStepInput(""); // Clear the step input field
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -109,22 +126,21 @@ function UpdateRecipe() {
 
   const display = recipeInput && (
     <Form onSubmit={handleSubmit} className="input">
-      <h1>Edit recipe: {recipeInput.name}</h1>
       <Form.Group className="mb-3" >
         <Form.Label>Enter recipe name</Form.Label>
-        <Form.Control defaultValue={recipeInput.name}/>
+        <Form.Control placeholder="recipe name" />
       </Form.Group>
 
       <div>
         <h2>Ingredients</h2>
         {/* Displaying existing ingredients */}
         <ul>
-          {recipeInput.ingredients.map((ingredient, index) => (
-            <div key={index}>
-              <li>{ingredient}</li>
-              <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
-            </div>
-          ))}
+        {recipeInput.ingredients.map((ingredient, index) => (
+          <div key={index}>
+            <li>{ingredient}</li>
+            <Button variant="danger" type="button" onClick={() => handleDeleteIngredient(index)}> Delete Ingredient </Button>
+          </div>
+        ))}
         </ul>
       </div>
 
@@ -135,23 +151,35 @@ function UpdateRecipe() {
       <Button variant="success" onClick={handleAddIngredient}> Add Ingredient </Button>
 
       <div>
-        <h2>Steps</h2>
+      <h2>Steps</h2>
         {/* Displaying existing steps */}
         <ol>
           {recipeInput.steps.map((step, index) => (
             <div key={index}>
-              <li>{step}</li>
-              <Button variant="danger" type="button" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
+              {editedStepIndex === index ? (
+                <div>
+                  <Form.Control placeholder="Edit step" onChange={handleStepChange} value={stepInput} />
+                  <Button variant="primary" onClick={handleSaveEditedStep}> Save </Button>
+                </div>
+              ) : (
+                <div>
+                  <li>{step}</li>
+                  <Button variant="danger" onClick={() => handleDeleteStep(index)}> Delete Step </Button>
+                  <Button variant="primary" onClick={() => handleEditStep(index)}> Edit Step </Button>
+                </div>
+              )}
             </div>
           ))}
         </ol>
       </div>
 
-      <Form.Group className="mb-3" >
+      <Form.Group className="mb-3">
         <Form.Label>Enter recipe steps</Form.Label>
-        <Form.Control placeholder="Enter step" onChange={handleStepChange}/>
-        </Form.Group>
-      <Button variant="success" onClick={handleAddStep}> Add Step </Button>
+        <Form.Control placeholder="Enter step" onChange={handleStepChange} value={stepInput} />
+      </Form.Group>
+      <Button variant="success" onClick={handleAddStep}>
+        Add Step
+      </Button>
 
       <Form.Group className="mb-3" >
         <Form.Label>Enter recipe image</Form.Label>
