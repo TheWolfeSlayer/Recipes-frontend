@@ -183,7 +183,7 @@ function UpdateRecipe() {
 
       <Form.Group className="mb-3" >
         <Form.Label>Enter recipe image</Form.Label>
-        <Form.Control placeholder="Enter image link" type="image" onChange={handleChange} value={recipeInput.image}/>
+        <Form.Control placeholder="Enter image link" name="image" onChange={handleChange} value={recipeInput.image}/>
       </Form.Group>
         
       <Button variant="primary" type="submit">
