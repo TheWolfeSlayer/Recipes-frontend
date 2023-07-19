@@ -126,9 +126,10 @@ function UpdateRecipe() {
 
   const display = recipeInput && (
     <Form onSubmit={handleSubmit} className="input">
+      <h2>Edit recipe: {recipeInput.name}</h2>
       <Form.Group className="mb-3" >
         <Form.Label>Enter recipe name</Form.Label>
-        <Form.Control placeholder="recipe name" />
+        <Form.Control placeholder="recipe name" value={recipeInput.name} name="name" onChange={handleChange}/>
       </Form.Group>
 
       <div>
