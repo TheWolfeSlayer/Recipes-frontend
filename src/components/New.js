@@ -121,7 +121,7 @@ function New() {
       <h1>Create a Recipe</h1>
       <Form.Group className="mb-3" >
         <Form.Label>Enter recipe name</Form.Label>
-        <Form.Control placeholder="recipe name" />
+        <Form.Control placeholder="recipe name" name="name" value={recipeInput.name} onChange={handleChange}/>
       </Form.Group>
 
       <div>
@@ -180,7 +180,7 @@ function New() {
     </div> */}
     <Form.Group className="mb-3" >
       <Form.Label>Enter recipe image</Form.Label>
-      <Form.Control placeholder="Enter image link" onChange={handleChange} value={recipeInput.image}/>
+      <Form.Control placeholder="Enter image link" name="image" onChange={handleChange} value={recipeInput.image}/>
     </Form.Group>
       
     <Button variant="primary" type="submit"> Submit </Button>
