@@ -121,7 +121,7 @@ function New() {
       <h1>Create a Recipe</h1>
       <Form.Group className="mb-3" >
         <Form.Label>Enter recipe name</Form.Label>
-        <Form.Control value={recipeInput.name} placeholder="recipe name" onChange={handleChange} name="name" />
+        <Form.Control placeholder="recipe name" name="name" value={recipeInput.name} onChange={handleChange}/>
       </Form.Group>
 
       <div>
